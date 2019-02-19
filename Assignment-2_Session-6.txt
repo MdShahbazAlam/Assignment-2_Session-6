@@ -1,0 +1,89 @@
+Assignment-2_Session-6
+
+Problem Statement:
+
+1. Use the given link below and locate the bank marketing dataset. Data Set Link
+
+Perform the below operations:
+
+a. Is there any association between Job and Default?
+Answer-
+# For checking association between Job and Default we perform chisq test.
+# We take Ho : There is no association between Job and Default.
+chisq.test(Bank_data$job, Bank_data$default)
+
+#Result
+Pearson's Chi-squared test
+
+data:  Bank_data$job and Bank_data$default
+X-squared = 34.441, df = 10, p-value = 0.0001555
+
+# Hence the p-value is less than 0.05, there is association between Job and Default at 95% confidence interval.
+
+b. Is there any significant difference in duration of last call between people having housing loan or not?
+Answer-
+z <- aov(duration~housing, data = Bank_data)
+summary(z)
+
+# Result
+              Df    Sum Sq Mean Sq F value Pr(>F)
+housing        1     40656   40656   0.621  0.431
+Residuals   4012 262537632   65438               
+105 observations deleted due to missingness
+
+# p-value = 0.431 is > 0.05 is greater than the cut-off value of 0.05 (duration & housing p-value = 0.431)
+# are independent to each other.
+
+c. Is there any association between consumer price index and consumer?
+Answer -
+cor.test(Bank_data$cons.price.idx, Bank_data$cons.conf.idx)
+
+# Result
+	Pearson's product-moment correlation
+
+data:  Bank_data$cons.price.idx and Bank_data$cons.conf.idx
+t = 2.944, df = 4117, p-value = 0.003258
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.01531598 0.07626866
+sample estimates:
+       cor 
+0.04583498
+
+# p-value = 0.003258 and it is very much less than 0.05. So, we can reject the null hypothesis in favor of 
+alternative hypothesis and conclude, that the variables, (job & Marital-p-value = 0.003258),
+(con.price.idx, consumer are dependent to each other).
+
+d. Is the employment variation rate consistent across job types?
+Answer-
+f <- aov(emp.var.rate~job, data = Bank_data)
+summary(f)
+
+# Result
+              Df Sum Sq Mean Sq F value Pr(>F)    
+job           10    278  27.784   11.69 <2e-16 ***
+Residuals   4069   9671   2.377                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+39 observations deleted due to missingness
+
+# p-value < 2.2e-16 is very much less than 0.05 so they are dependent to each other and are not dependent to each other.
+
+e. Is the employment variation rate same across education?
+Answer-
+b <- aov(emp.var.rate~education, data = Bank_data)
+summary(b)
+
+# Result
+              Df Sum Sq Mean Sq F value   Pr(>F)    
+education      6     62  10.375   4.295 0.000253 ***
+Residuals   3945   9529   2.415                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+167 observations deleted due to missingness
+
+# p-value = 0.000253 is very much less than 0.05 so employment variation rate is not same across education.
+
+f. Which group is more confident?
+Answer-
+
